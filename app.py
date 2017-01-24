@@ -21,7 +21,6 @@ import sys
 import cmd
 from tabulate import tabulate
 from docopt import docopt, DocoptExit
-from MyApp.views import LyricsViews
 
 def docopt_cmd(func):
     def fn(self, arg):
