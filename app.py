@@ -1,28 +1,29 @@
-"""Discovr
- Discovr is a Command Line Application for Finding Lyrics for a particular song using an API
+#!/usr/bin/env python
+"""
+This example uses docopt with the built in cmd module to demonstrate an
+interactive command application.
+
 Usage:
-	find <query>
-	view <track_id>
-    save<track_id>
-    delete
-    my_program (-h | --help | --version)
+    my_app find <query_string>
+    my_app view <song_id>
+    my_app save <song_id>
+    my_app delete <song_id>
+    my_app (-i | --interactive)
+    my_app (-h | --help | --version)
 
 Options:
     -i, --interactive  Interactive Mode
     -h, --help  Show this screen and exit.
-    --baud=<n>  Baudrate [default: 9600]
+
 """
 
 import sys
 import cmd
-from docopt import docopt, DocoptExit
 from tabulate import tabulate
+from docopt import docopt, DocoptExit
+from MyApp.views import LyricsViews
 
 def docopt_cmd(func):
-    """
-    This decorator is used to simplify the try/except block and pass the result
-    of the docopt parsing to the called action.
-    """
     def fn(self, arg):
         try:
             opt = docopt(fn.__doc__, arg)
@@ -49,8 +50,8 @@ def docopt_cmd(func):
     return fn
 
 
-class App (cmd.Cmd):
-    intro = 'Welcome to Song Lyric Finder!' \
+class MyApp (cmd.Cmd):
+    intro = 'Welcome to Discovr!' \
         + ' (type help for a list of commands.)'
     prompt = '(Discovr) '
     file = None
@@ -69,8 +70,10 @@ class App (cmd.Cmd):
             artist = results[i]['result']['primary_artist']['name']
 
             table.append([song_id, title, artist])
-        click.secho(tabulate(table, table_headers,
-                             tablefmt="fancy_grid"), fg='yellow')
+
+
+            '''' click.echo(tabulate(table, table_headers,
+                             tablefmt="fancy_grid"), fg='green')'''
 
     @docopt_cmd
     def do_view(self, song_id):
@@ -100,6 +103,6 @@ class App (cmd.Cmd):
 opt = docopt(__doc__, sys.argv[1:])
 
 if opt['--interactive']:
-    MyInteractive().cmdloop()
+    MyApp().cmdloop()
 
 print(opt)
