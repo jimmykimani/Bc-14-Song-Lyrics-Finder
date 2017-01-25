@@ -36,8 +36,8 @@ class AppRun(cmd.Cmd):
     def do_cls(self, arg):
         click.clear()
 
-    def do_q(self):
-        ''' The command is used to exit and perform another action'''
+    def do_0(self):
+        ''' Normal termination exits with 0'''
         # Exit
         return True
 
