@@ -8,8 +8,7 @@ class Lyrics():
         self.api = "http://api.musixmatch.com/ws/1.1/"
         self.api_key="fd50ee54d357935a8742edaa76394ff8"
         self.songs={}
-    '''    self.session = Session()'''
-    '''searches for song details usi'''
+
 
     def song_find(self,query):
 
