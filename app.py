@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
-This example uses docopt with the built in cmd module to demonstrate an
-interactive command application.
+Discovr is A Command Line Application for Finding Lyrics for a particular song using an API
 
 Usage:
     my_app find <query_string>
@@ -57,8 +56,8 @@ class MyApp (cmd.Cmd):
 
     @docopt_cmd
     def do_find(self, search_parameters):
-        """Usage: Shows a list of songs searched by the user"""
-        results = view.search(search_parameters)
+        """ Shows a list of songs searched by the user"""
+        results = view.find_song(search_parameters)
 
         table_headers=['Song ID', 'Song Title','Artist']
         '''table[]'''
@@ -76,19 +75,19 @@ class MyApp (cmd.Cmd):
 
     @docopt_cmd
     def do_view(self, song_id):
-        """Usage:View song lyrics bases on song id"""
-        lyrics=view.get_song_by_id(song_id)['lyrics']
+        """View song lyrics bases on song id"""
+        lyrics=view.get_song(song_id)['lyrics']
         ""
 
     @docopt_cmd
     def do_save(self, song_id):
-        """Usage:Store song lyrics based on id locally"""
+        """Store song lyrics based on id locally"""
         view.save_song(song_id)
         lyrics=view.get_song_by_id(song_id)['lyrics']
 
     @docopt_cmd
     def do_delete(self, line):
-        """Usage:Deletes song lyrics bases on song id locally"""
+        """Deletes song lyrics bases on song id locally"""
 
         lyrics=view.get_song_by_id(song_id)['lyrics']
 
