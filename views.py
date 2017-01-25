@@ -11,10 +11,10 @@ class Lyrics():
 
 
     def song_find(self,query):
-    '''
-    This function receives a users querry_string and
-    returns songs that matches with the querry from the API.
-    '''
+        '''
+        This function receives a users querry_string and
+        returns songs that matches with the querry from the API.
+        '''
         method = "track.search"
         query_string = {"apikey": self.api_key, "q": query}
         data = requests.get(self.api + method, params=query_string).json()
@@ -33,9 +33,9 @@ class Lyrics():
             album_name = item['track']['album_name']
 
             table.append([track_id, track_name, artist_name, album_name])
-            '''
-            prints out the tabulated data
-            '''
+        '''
+        prints out the tabulated data
+        '''
 
         print tabulate(table, table_headers,tablefmt="fancy_grid")
 
