@@ -11,10 +11,17 @@ class Lyrics():
 
 
     def song_find(self,query):
-
+    '''
+    This function receives a users querry_string and
+    returns songs that matches with the querry from the API.
+    '''
         method = "track.search"
         query_string = {"apikey": self.api_key, "q": query}
         data = requests.get(self.api + method, params=query_string).json()
+        '''
+        Tabualtion is python library designed to make it quick
+        and easy to represent data in a visually appealing table
+        '''
 
         table_headers = ['ID', 'Title', 'Artist','Album']
         table = []
@@ -26,6 +33,9 @@ class Lyrics():
             album_name = item['track']['album_name']
 
             table.append([track_id, track_name, artist_name, album_name])
+            '''
+            prints out the tabulated data
+            '''
 
         print tabulate(table, table_headers,tablefmt="fancy_grid")
 
