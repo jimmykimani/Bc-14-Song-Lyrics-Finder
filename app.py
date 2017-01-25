@@ -24,13 +24,13 @@ class AppRun(cmd.Cmd):
         '''
         lyric.song_view(query)
 
-    def do_view(self, query):
+    def do_save(self, query):
         '''
         This is for saving the lyrics of a certain song based on its id
         to the local database
 
         '''
-        lyric.song_view(query)
+        lyric.song_save(query)
 
 
     def do_cls(self, arg):
