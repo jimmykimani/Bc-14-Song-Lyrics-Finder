@@ -1,6 +1,7 @@
 import requests
 import click
 from tabulate import tabulate
+from colorama import Fore, Back, Style
 
 
 class Lyrics():
@@ -29,7 +30,7 @@ class Lyrics():
         and easy to represent data in a visually appealing table
         '''
 
-        table_headers = ['Index' 'ID', 'Title', 'Artist','Album']
+        table_headers = ['Index', 'ID', 'Title', 'Artist','Album']
         index=1
         table = []
 
@@ -39,7 +40,7 @@ class Lyrics():
             artist_name = item['track']['artist_name']
             album_name = item['track']['album_name']
 
-            table.append([track_id, track_name, artist_name, album_name])
+            table.append([index,track_id, track_name, artist_name, album_name])
         '''
         prints out the tabulated data
         '''
