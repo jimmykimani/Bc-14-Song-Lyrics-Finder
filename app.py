@@ -3,7 +3,7 @@ import click
 from views import Lyrics
 class AppRun(cmd.Cmd):
     '''Name of the program'''
-    prompt = "Enter find  <query> to search for song name or artist:"
+    prompt = "Welcome to Discovr"
 
     def do_find(self, query):
         '''
@@ -21,18 +21,16 @@ class AppRun(cmd.Cmd):
         onthe Track id where by the user inputs the id of the track to view
         Lyrics
         '''
-        lyric.song_view(query)
+        print lyric.song_view(query)
 
     def do_save(self, query):
         '''
         This command enables a user to save lyrics of a certain song based on its id
         to the local database
         '''
-        if(song == ""):
-            print('"Sorry, Your Song is either already in the database or no song found"')
-        else:
-            (model.save_lyrics(song, save = True))
-            print("Success! Song saved.")
+
+        print(lyric.save_lyrics(query))
+
 
 
     def do_clear(self, query):

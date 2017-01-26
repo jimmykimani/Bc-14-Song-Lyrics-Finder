@@ -1,36 +1,34 @@
 import os
 import sys
-from sqlalchemy import Column, String, Text ,String
+from sqlalchemy import Column, String, Text
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import *
 #from sqlalchemy import relationship
 
 
+engine =  create_engine('sqlite:///sqlalchemy_lyrics.db')
+Session = sessionmaker(bind=engine)
+session=Session()
+
 Base = declarative_base()
 
+
 class LyricSave(Base):
-    __tablename__="songs"
-    song_id = Column(String, primary_key=True)
-    track_id = Column(String(255))
-    track_name=Column(String(250))
-    artist_name=Column(String(250))
-    track_lyrics = Column(Text())
-    '''
-    An engine that stores data in the local directory
-    '''
+    __tablename__="Tracks"
+    track_id = Column(String(255), primary_key=True)
+    track_lyrics = Column(Text)
+    def __init__(self,track_id,track_lyrics):
+        self.track_id=track_id
+        self.track_lyrics=track_lyrics
 
-engine =  create_engine('sqlite:///sqlalchemy_lyrics.db')
-'''
-insert LyricSave in the lyrics table
-'''
 
-def save_lyrics(track_id,track_lyrics):
-    lyrics=LyricSave(track_id=track_id,track_lyrics=track_lyrics)
-    session.add(lyrics)
-    session.commit()
-def  clear_lyrics():
-    song_deleted=session.query(LyricSave).delete()
-    session.commit()
+
+
+
+# def  clear_lyrics():
+#     song_deleted=session.query(LyricSave).delete()
+#     session.commit()
 
 
 Base.metadata.create_all(engine)
