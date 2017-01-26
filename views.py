@@ -19,49 +19,57 @@ class Lyrics():
 
 
     def song_find(self,query):
-        '''
-        This function receives a users querry_string and
-        returns songs that matches with the querry from the API.
-        '''
+        if query:
+            '''
+            This function receives a users querry_string and
+            returns songs that matches with the querry from the API.
+            '''
 
-        query_string = {"apikey": self.api_key, "q": query}
-        try:
-             data = requests.get(self.api + "track.search", params=query_string,headers=self.headers).json()
-        except:
-            raise requests.exceptions.ConnectionError("****No Connection****")
+            query_string = {"apikey": self.api_key, "q": query}
+            try:
+                 data = requests.get(self.api + "track.search", params=query_string,headers=self.headers).json()
+            except:
+                raise requests.exceptions.ConnectionError("****No Connection****")
 
-        '''
-        Tabualtion is python library designed to make it quick
-        and easy to represent data in a visually appealing table
-        '''
+            '''
+            Tabualtion is python library designed to make it quick
+            and easy to represent data in a visually appealing table
+            '''
 
-        table_headers = [ 'ID', 'Title', 'Artist','Album']
-        table = []
+            table_headers = [ 'ID', 'Title', 'Artist','Album']
+            table = []
 
-        for item in data['message']['body']['track_list']:
-            track_id = item['track']['track_id']
-            track_name = item['track']['track_name']
-            artist_name = item['track']['artist_name']
-            album_name = item['track']['album_name']
+            for item in data['message']['body']['track_list']:
+                track_id = item['track']['track_id']
+                track_name = item['track']['track_name']
+                artist_name = item['track']['artist_name']
+                album_name = item['track']['album_name']
 
-            table.append([track_id, track_name, artist_name, album_name])
-        '''
-        prints out the tabulated data
-        '''
+                table.append([track_id, track_name, artist_name, album_name])
+            '''
+            prints out the tabulated data
+            '''
 
-        print Fore.YELLOW + tabulate(table, table_headers,tablefmt="fancy_grid")
+            return Fore.YELLOW + tabulate(table, table_headers,tablefmt="fancy_grid")
+        else:
+            return Fore.RED + "Enter find <query> to search name of song or artist"
+
 
 
     def song_view(self,track_id):
-        self._track_id = track_id
-        self._lyrics=None
+        if track_id:
+            self._track_id = track_id
+            self._lyrics=None
 
-        query_string = {"apikey": self.api_key, "track_id": track_id}
-        response = requests.get(self.api + "track.lyrics.get", params=query_string)
-        data = response.json()
-        lyrics=data["message"]["body"]["lyrics"]["lyrics_body"]
-        self._lyrics=lyrics
-        return Fore.YELLOW +lyrics
+            query_string = {"apikey": self.api_key, "track_id": track_id}
+            response = requests.get(self.api + "track.lyrics.get", params=query_string)
+            data = response.json()
+            lyrics=data["message"]["body"]["lyrics"]["lyrics_body"]
+            self._lyrics=lyrics
+            return Fore.YELLOW +lyrics
+        else:
+            return Fore.RED + "Enter a valid Track id"
+
 
     def save_lyrics(self, track_id):
         if track_id:
@@ -69,6 +77,10 @@ class Lyrics():
             session.add(lyrics_to_save)
             # return lyrics_to_save
             session.commit()
-            return "Success! Song saved."
+            return Fore.GREEN +"Success! Song saved!!!."
         else:
-            return "track id must be valid"
+            return Fore.RED +"Track id must be valid!!!"
+
+    def clear_lyrics(self):
+        session.query(LyricSave).delete()
+        session.commit()
