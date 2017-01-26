@@ -1,10 +1,9 @@
 import cmd
 import click
 from views import Lyrics
-
 class AppRun(cmd.Cmd):
     '''Name of the program'''
-    prompt = "Enter Find*text* to search for song name or artist:"
+    prompt = "Enter find  <query> to search for song name or artist:"
 
     def do_find(self, query):
         '''
@@ -29,13 +28,28 @@ class AppRun(cmd.Cmd):
         This command enables a user to save lyrics of a certain song based on its id
         to the local database
         '''
-        lyric.song_save(query)
+        if(song == ""):
+            print('"Sorry, Your Song is either already in the database or no song found"')
+        else:
+            (model.save_lyrics(song, save = True))
+            print("Success! Song saved.")
 
 
-    def do_clear(self, arg):
+    def do_clear(self, query):
         '''
         Formats the lyrics database
         '''
+        click.echo('Do you wish to continue?,This song will be deleted [y/n]\n')
+        c ==click.getchar()
+        if c =='y':
+            clear()
+            click.echo('Song Lyrics Deleted Succesfully')
+        elif c == 'n':
+            click.echo('Aborted Deletion')
+        else:
+            click.echo('Invalid Input')
+
+
         lyric.song_clear(query)
 
     def do_0(self):
