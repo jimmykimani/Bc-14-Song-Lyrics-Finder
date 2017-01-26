@@ -1,8 +1,12 @@
 import requests
 import click
 from model import LyricSave
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from model import Base
 from tabulate import tabulate
 from colorama import Fore, Back, Style
+from model import session
 
 
 class Lyrics():
@@ -19,10 +23,10 @@ class Lyrics():
         This function receives a users querry_string and
         returns songs that matches with the querry from the API.
         '''
-        method = "track.search"
+
         query_string = {"apikey": self.api_key, "q": query}
         try:
-             data = requests.get(self.api + method, params=query_string,headers=self.headers).json()
+             data = requests.get(self.api + "track.search", params=query_string,headers=self.headers).json()
         except:
             raise requests.exceptions.ConnectionError("****No Connection****")
 
@@ -31,8 +35,7 @@ class Lyrics():
         and easy to represent data in a visually appealing table
         '''
 
-        table_headers = ['Index', 'ID', 'Title', 'Artist','Album']
-        index=1
+        table_headers = [ 'ID', 'Title', 'Artist','Album']
         table = []
 
         for item in data['message']['body']['track_list']:
@@ -41,23 +44,31 @@ class Lyrics():
             artist_name = item['track']['artist_name']
             album_name = item['track']['album_name']
 
-            table.append([index,track_id, track_name, artist_name, album_name])
+            table.append([track_id, track_name, artist_name, album_name])
         '''
         prints out the tabulated data
         '''
-        index+=1
 
-        print tabulate(table, table_headers,tablefmt="fancy_grid")
+        print Fore.YELLOW + tabulate(table, table_headers,tablefmt="fancy_grid")
 
 
     def song_view(self,track_id):
+        self._track_id = track_id
+        self._lyrics=None
 
-        #if self.session.query(music).filter_by(song_id=track_id):
-        method="track.lyrics.get"
         query_string = {"apikey": self.api_key, "track_id": track_id}
-        response = requests.get(self.api + method, params=query_string)
+        response = requests.get(self.api + "track.lyrics.get", params=query_string)
         data = response.json()
         lyrics=data["message"]["body"]["lyrics"]["lyrics_body"]
-        if save:
-            app.save_lyrics(track_id, lyrics)
-        print lyrics
+        self._lyrics=lyrics
+        return Fore.YELLOW +lyrics
+
+    def save_lyrics(self, track_id):
+        if track_id:
+            lyrics_to_save=LyricSave(track_id=self._track_id,track_lyrics=self._lyrics)
+            session.add(lyrics_to_save)
+            # return lyrics_to_save
+            session.commit()
+            return "Success! Song saved."
+        else:
+            return "track id must be valid"
