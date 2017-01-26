@@ -29,7 +29,8 @@ class Lyrics():
         and easy to represent data in a visually appealing table
         '''
 
-        table_headers = ['ID', 'Title', 'Artist','Album']
+        table_headers = ['Index' 'ID', 'Title', 'Artist','Album']
+        index=1
         table = []
 
         for item in data['message']['body']['track_list']:
@@ -42,6 +43,7 @@ class Lyrics():
         '''
         prints out the tabulated data
         '''
+        index+=1
 
         print tabulate(table, table_headers,tablefmt="fancy_grid")
 
