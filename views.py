@@ -1,5 +1,6 @@
 import requests
 import click
+from model import LyricSave
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 
@@ -57,4 +58,6 @@ class Lyrics():
         response = requests.get(self.api + method, params=query_string)
         data = response.json()
         lyrics=data["message"]["body"]["lyrics"]["lyrics_body"]
+        if save:
+            app.save_lyrics(track_id, lyrics)
         print lyrics
