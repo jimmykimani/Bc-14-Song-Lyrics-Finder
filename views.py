@@ -1,13 +1,15 @@
 import requests
 import click
-from prettytable import PrettyTable as table
 from tabulate import tabulate
+
 
 class Lyrics():
     def __init__(self):
         self.api = "http://api.musixmatch.com/ws/1.1/"
         self.api_key="fd50ee54d357935a8742edaa76394ff8"
-        self.songs={}
+        self.headers={
+        'Authorization': 'Bearer fd50ee54d357935a8742edaa76394ff8'
+        }
 
 
     def song_find(self,query):
@@ -17,7 +19,11 @@ class Lyrics():
         '''
         method = "track.search"
         query_string = {"apikey": self.api_key, "q": query}
-        data = requests.get(self.api + method, params=query_string).json()
+        try:
+             data = requests.get(self.api + method, params=query_string,headers=self.headers).json()
+        except:
+            raise requests.exceptions.ConnectionError("****No Connection****")
+
         '''
         Tabualtion is python library designed to make it quick
         and easy to represent data in a visually appealing table

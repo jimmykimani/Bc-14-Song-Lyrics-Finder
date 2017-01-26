@@ -4,15 +4,15 @@ from views import Lyrics
 
 class AppRun(cmd.Cmd):
     '''Name of the program'''
-    prompt = "Welcome to Discovr>>"
+    prompt = "Enter Find*text* to search for song name or artist:"
 
     def do_find(self, query):
         '''
         The do_find commmand  enables a user to view a list of songs
         based on the query ie Find drake
         '''
-        if(query == "",".;''/?\]["):
-            print('"Sorry, You did not input a Song name or Artist Name"')
+        if(query == ""):
+            print('"Please, input a Song name or Artist Name!!"')
         else:
              lyric.song_find(query)
 
