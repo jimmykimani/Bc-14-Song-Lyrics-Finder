@@ -1,19 +1,30 @@
+
+"""
+    Commands:
+        song_find <query>
+        song_view <track_number>
+        song_save <track_id>
+        clear
+        quit
+    Options:
+        -h, --help  Show this screen and exit
+
+"""
 import cmd
 import click
+from colorama import Fore, Back, Style
 from views import Lyrics
 class AppRun(cmd.Cmd):
     '''Name of the program'''
-    prompt = "Welcome to Discovr"
+    prompt = Fore.GREEN + "Welcome to Discovr (enter help for more)-->"
 
     def do_find(self, query):
         '''
         The do_find commmand  enables a user to view a list of songs
         based on the query ie Find drake
         '''
-        if(query == ""):
-            print('"Please, input a Song name or Artist Name!!"')
-        else:
-             lyric.song_find(query)
+
+        print  lyric.song_find(query)
 
     def do_view(self, query):
         '''
@@ -33,27 +44,17 @@ class AppRun(cmd.Cmd):
 
 
 
-    def do_clear(self, query):
-        '''
-        Formats the lyrics database
-        '''
-        click.echo('Do you wish to continue?,This song will be deleted [y/n]\n')
-        c ==click.getchar()
-        if c =='y':
-            clear()
-            click.echo('Song Lyrics Deleted Succesfully')
-        elif c == 'n':
-            click.echo('Aborted Deletion')
+    def do_clear(self, line):
+        clear=raw_input(" Warning!!! Song database will be cleared 1 for YES, 2 for NO: ")
+        if clear=='1':
+          print Fore.CYAN + ("Database cleared Succesfully")
         else:
-            click.echo('Invalid Input')
+          print Fore.CYAN + ("Aborted")
 
-
-        lyric.song_clear(query)
-
-    def do_0(self):
-        ''' Normal termination exits with 0'''
-        # Exit
-        return True
+    def do_quit(self, arg):
+        """Usage: quit"""
+        print Fore.CYAN + ("Goodbye! :( ")
+        exit()
 
 
 if __name__ == '__main__':
