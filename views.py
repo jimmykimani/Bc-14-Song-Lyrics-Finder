@@ -29,7 +29,7 @@ class Lyrics():
             try:
                  data = requests.get(self.api + "track.search", params=query_string,headers=self.headers).json()
             except:
-                raise requests.exceptions.ConnectionError("****No Connection****")
+                raise requests.exceptions.ConnectionError(Fore.RED +"****No Connection****")
 
             '''
             Tabualtion is python library designed to make it quick
@@ -77,7 +77,7 @@ class Lyrics():
             session.add(lyrics_to_save)
             # return lyrics_to_save
             session.commit()
-            return Fore.GREEN +"Success! Song saved!!!."
+            return Fore.CYAN +"***** Success! Song saved :) ******* "
         else:
             return Fore.RED +"Track id must be valid!!!"
 

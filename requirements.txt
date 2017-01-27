@@ -2,7 +2,6 @@ click==6.7
 colorama==0.3.7
 docopt==0.6.2
 musixmatch==0.9
-prettytable==0.7.2
 progressbar2==3.12.0
 python-utils==2.0.1
 requests==2.9.1
@@ -12,4 +11,3 @@ tabulate==0.7.5
 unity-lens-photos==1.0
 urllib3==1.13.1
 virtualenv==15.1.0
-
