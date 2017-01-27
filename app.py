@@ -1,6 +1,6 @@
 
 """
-    Commands:
+    usage:
         song_find <query>
         song_view <track_number>
         song_save <track_id>
@@ -23,8 +23,10 @@ class AppRun(cmd.Cmd):
         The do_find commmand  enables a user to view a list of songs
         based on the query ie Find drake
         '''
-
         print  lyric.song_find(query)
+
+
+
 
     def do_view(self, query):
         '''
@@ -45,15 +47,15 @@ class AppRun(cmd.Cmd):
 
 
     def do_clear(self, line):
-        clear=raw_input(" Warning!!! Song database will be cleared 1 for YES, 2 for NO: ")
-        if clear=='1':
-          print Fore.CYAN + ("Database cleared Succesfully")
+        clear=raw_input ( Fore.RED + " Warning!!! Song database will be cleared [y/n]: ")
+        if clear=='y':
+          print Fore.CYAN + ("#### Database cleared Succesfully ####")
         else:
-          print Fore.CYAN + ("Aborted")
+          print Fore.CYAN + ("### Aborted ###")
 
     def do_quit(self, arg):
         """Usage: quit"""
-        print Fore.CYAN + ("Goodbye! :( ")
+        print Fore.CYAN + ("######### Goodbye! :( ")
         exit()
 
 
